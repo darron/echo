@@ -25,8 +25,6 @@ func handler(w http.ResponseWriter, r *http.Request) {
 			fmt.Fprintf(w, "%s: %s\n", key, value)
 		}
 	}
-
-	fmt.Fprintf(w, "\nHello, World!")
 }
 
 func main() {
