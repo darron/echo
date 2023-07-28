@@ -3,18 +3,30 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"sort"
 )
 
 func handler(w http.ResponseWriter, r *http.Request) {
 	// Set the response content type
 	w.Header().Set("Content-Type", "text/plain")
 
-	// Print all the incoming headers
-	for key, values := range r.Header {
-		for _, value := range values {
+	// Get the headers keys
+	keys := make([]string, 0, len(r.Header))
+	for key := range r.Header {
+		keys = append(keys, key)
+	}
+
+	// Sort the header keys alphabetically
+	sort.Strings(keys)
+
+	// Print the headers in alphabetical order
+	for _, key := range keys {
+		for _, value := range r.Header[key] {
 			fmt.Fprintf(w, "%s: %s\n", key, value)
 		}
 	}
+
+	fmt.Fprintf(w, "\nHello, World!")
 }
 
 func main() {
